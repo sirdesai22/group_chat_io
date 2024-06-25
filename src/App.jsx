@@ -6,7 +6,7 @@ import { Buffer } from 'buffer';
 window.Buffer = Buffer;
 
 function App() {
-  const [username, setUsername] = useState('Dummy');
+  const [username, setUsername] = useState('');
   return (
     <>
       <Router>

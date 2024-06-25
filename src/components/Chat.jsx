@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import io from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 
-const socket = io('http://localhost:3000');
+const socket = io(process.env.ORIGINB);
 
 const Chat = () => {
     const { username } = useParams();
