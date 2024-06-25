@@ -11,20 +11,15 @@
   },
   "dependencies": {
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "buffer": "^6.0.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "nodemon": "^3.1.4",
+    "firebase": "^10.12.2",
     "process": "^0.11.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.24.0",
-    "socket.io": "^4.7.5",
-    "socket.io-client": "^4.7.5"
+    "react-router-dom": "^6.24.0"
   },
   "devDependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

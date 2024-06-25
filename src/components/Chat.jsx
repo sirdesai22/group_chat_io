@@ -1,50 +1,111 @@
-import React, { useEffect, useState } from 'react'
-import io from 'socket.io-client';
+import { addDoc, collection, deleteDoc, doc, getDocs, onSnapshot } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-const socket = io(process.env.ORIGINB);
+import { db } from '../config/firebase-config';
 
 const Chat = () => {
     const { username } = useParams();
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
 
+    const chatsCollectionRef = collection(db, 'chatDB');
+
     useEffect(() => {
-        socket.on('chat message', ({ sender, message }) => {
-            setMessages(prevMessages => [...prevMessages, { sender, message }]);
-          });
+        const unsubscribe = onSnapshot(chatsCollectionRef, (snapshot) => {
+            const filterData = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id
+            }));
+            const finalData = filterData.sort((a, b) => a.time - b.time);
+            setMessages(finalData);
+        });
 
+        scheduleNextCall();
+
+        // Cleanup subscription on unmount
         return () => {
-            socket.off('chat message');
+            unsubscribe();
         };
-    }, [username]); // Empty dependency array ensures this effect runs only once
+    }, []);
 
-    const sendMessage = () => {
-        socket.emit('chat message', { sender: username, message: input });
-        setInput('');
+    const sendMessage = async () => {
+        if (input.length > 0) {
+            try {
+                await addDoc(chatsCollectionRef, {
+                    username: username,
+                    text: input,
+                    time: new Date(),
+                });
+                setInput('');
+            } catch (error) {
+                console.log(error);
+            }
+        }
     };
+
+    const deleteDB = async () => {
+        try {
+            const querySnapshot = await getDocs(chatsCollectionRef);
+            const deletePromises = querySnapshot.docs.map((document) =>
+                deleteDoc(doc(db, 'chatDB', document.id))
+            );
+            await Promise.all(deletePromises);
+        } catch (error) {
+            console.log(error);
+        }
+        console.log('Database deleted!');
+    };
+
+    function scheduleNextCall() {
+        const now = new Date();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        const milliseconds = now.getMilliseconds();
+
+        // Calculate the milliseconds remaining until the next half hour
+        let timeToNextCall;
+
+        if (minutes < 30) {
+            timeToNextCall = ((30 - minutes) * 60 * 1000) - (seconds * 1000) - milliseconds;
+        } else {
+            timeToNextCall = ((60 - minutes) * 60 * 1000) - (seconds * 1000) - milliseconds;
+        }
+
+        setTimeout(() => {
+            deleteDB(); // Call deleteDB every 30 minutes
+        }, timeToNextCall);
+    }
 
     return (
         <div className=''>
-            <ul className='mx-2'>
+            <h1 className='font-semibold text-2xl px-2 bg-blue-500 text-stone-800 text-center font-mono'>
+                Hello, welcome to 6A group chat!! Have fun ✌️
+            </h1>
+            <h1 className='font-semibold text-base bg-blue-500 text-white text-center font-mono'>
+                Made by Sirdesai
+            </h1>
+            <ul className=''>
                 {messages.map((msg, index) => (
-                    <li key={index} className='text-xl'>
-                        <strong>{msg.sender}: </strong>{msg.message}
+                    <li key={index} className={`text-xl px-2 ${(username === msg.username) ? 'bg-green-200' : 'bg-red-200'}`}>
+                        <span className={`font-semibold`}>{msg.username}: </span>{msg.text}
                     </li>
                 ))}
             </ul>
 
-            <form className='fixed bg-blue-500 p-3 gap-5 bottom-0 w-full flex justify-between items-center'>
+            <div className='fixed bg-blue-500 p-3 gap-5 bottom-0 w-full flex justify-between items-center'>
                 <input
                     type="text"
                     className='w-full p-3 text-2xl font-semibold rounded-md'
                     placeholder='Enter your text...'
                     value={input}
-                    onChange={e => setInput(e.target.value)} />
-                <button type='button' className='px-10 text-white hover:bg-green-600 py-3 text-2xl font-semibold rounded-md bg-green-500' onClick={sendMessage}>Send</button>
-            </form>
+                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); sendMessage(); } }}
+                    onChange={(e) => setInput(e.target.value)} />
+                <button className='px-10 text-white hover:bg-green-600 py-3 text-2xl font-semibold rounded-md bg-green-500' onClick={sendMessage}>
+                    Send
+                </button>
+            </div>
         </div>
     );
-}
+};
 
 export default Chat;

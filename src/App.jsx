@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Chat from './components/Chat'
 import Login from './components/Login'
 import { useState } from 'react';
-import { Buffer } from 'buffer';
-window.Buffer = Buffer;
 
 function App() {
   const [username, setUsername] = useState('');
