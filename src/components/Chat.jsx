@@ -84,7 +84,7 @@ const Chat = () => {
             <h1 className='font-semibold text-base bg-blue-500 text-white text-center font-mono'>
                 Made by Sirdesai
             </h1>
-            <ul className=''>
+            <ul className='mb-20'>
                 {messages.map((msg, index) => (
                     <li key={index} className={`text-xl px-2 ${(username === msg.username) ? 'bg-green-200' : 'bg-red-200'}`}>
                         <span className={`font-semibold`}>{msg.username}: </span>{msg.text}
@@ -92,7 +92,7 @@ const Chat = () => {
                 ))}
             </ul>
 
-            <div className='bg-blue-500 p-3 gap-5 bottom-0 w-full flex justify-between items-center'>
+            <div className='fixed bg-blue-500 p-3 gap-5 bottom-0 w-full flex justify-between items-center'>
                 <input
                     type="text"
                     className='w-full p-3 text-2xl font-semibold rounded-md'
