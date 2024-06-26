@@ -20,7 +20,7 @@ const Chat = () => {
             setMessages(finalData);
         });
 
-        scheduleNextCall();
+        
 
         // Cleanup subscription on unmount
         return () => {
@@ -57,24 +57,12 @@ const Chat = () => {
     };
 
     function scheduleNextCall() {
-        const now = new Date();
-        const minutes = now.getMinutes();
-        const seconds = now.getSeconds();
-        const milliseconds = now.getMilliseconds();
-
-        // Calculate the milliseconds remaining until the next half hour
-        let timeToNextCall;
-
-        if (minutes < 30) {
-            timeToNextCall = ((30 - minutes) * 60 * 1000) - (seconds * 1000) - milliseconds;
-        } else {
-            timeToNextCall = ((60 - minutes) * 60 * 1000) - (seconds * 1000) - milliseconds;
-        }
-
         setTimeout(() => {
             deleteDB(); // Call deleteDB every 30 minutes
-        }, timeToNextCall);
+        }, 600000);
     }
+
+    scheduleNextCall();
 
     return (
         <div className=''>
@@ -100,7 +88,7 @@ const Chat = () => {
                     value={input}
                     onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); sendMessage(); } }}
                     onChange={(e) => setInput(e.target.value)} />
-                <button className='px-10 text-white hover:bg-green-600 py-3 text-2xl font-semibold rounded-md bg-green-500' onClick={sendMessage}>
+                <button className='px-5 md:px-10 text-white hover:bg-green-600 py-3 text-2xl font-semibold rounded-md bg-green-500' onClick={sendMessage}>
                     Send
                 </button>
             </div>

@@ -8,8 +8,8 @@ const Login = ({ username, setUsername }) => {
 
     return (
         <div className='h-screen w-full flex justify-center items-center text-center' style={{ background: 'url(/doodlebg.jpg)' }}>
-            <div className='flex flex-col justify-center items-center gap-5 p-10 border-2 bg-white text-2xl rounded-md w-2/5 h-2/4 shadow-md'>
-                <h1 className='font-semibold text-3xl'>🔥6A Lab Chat Group 😎</h1>
+            <div className='flex flex-col justify-center items-center gap-5 p-10 border-2 bg-white text-2xl rounded-md w-11/12 md:w-2/5 md:h-2/4 shadow-md'>
+                <h1 className='font-semibold text-xl md:text-3xl'>🔥6A Lab Chat Group 😎</h1>
                 <input
                     type="text"
                     className='border-4 p-4 rounded-lg w-full font-semibold'
@@ -17,7 +17,7 @@ const Login = ({ username, setUsername }) => {
                     value={username}
                     onChange={(e) => { setUsername(e.target.value) }} />
                 <button
-                    className="px-4 py-3 bg-green-500 text-white rounded-lg font-semibold w-2/4"
+                    className="px-4 py-3 bg-green-500 text-white rounded-lg font-semibold w-3/4 md:w-2/4"
                     onClick={chatLogin}>Let's Chat!</button>
             </div>
         </div>
