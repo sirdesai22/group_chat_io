@@ -19,9 +19,6 @@ const Chat = () => {
             const finalData = filterData.sort((a, b) => a.time - b.time);
             setMessages(finalData);
         });
-
-        
-
         // Cleanup subscription on unmount
         return () => {
             unsubscribe();
@@ -56,16 +53,9 @@ const Chat = () => {
         console.log('Database deleted!');
     };
 
-    function scheduleNextCall() {
-        setTimeout(() => {
-            deleteDB(); // Call deleteDB every 30 minutes
-        }, 600000);
-    }
-
-    scheduleNextCall();
-
     return (
         <div className=''>
+            {(username === 'admin-sirdesai')?<button className='absolute px-2 m-2 text-white hover:bg-green-600 py-2 text-base font-semibold rounded-md bg-green-500' onClick={deleteDB}>Delete DB</button>:<></>}
             <h1 className='font-semibold text-2xl px-2 bg-blue-500 text-stone-800 text-center font-mono'>
                 Hello, welcome to 6A group chat!! Have fun ✌️
             </h1>
