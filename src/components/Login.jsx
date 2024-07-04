@@ -1,8 +1,21 @@
+import { addDoc, collection } from 'firebase/firestore';
 import React from 'react'
+import { db } from '../config/firebase-config';
 
 const Login = ({ username, setUsername }) => {
 
-    const chatLogin = () => {
+    const chatsCollectionRef = collection(db, 'chatDB');
+
+    const chatLogin = async () => {
+        try {
+            await addDoc(chatsCollectionRef, {
+                username: 'Admin',
+                text: `${username} has joined the chat!`,
+                time: new Date(),
+            });
+        } catch (error) {
+            console.log(error);
+        }
         window.location.href = `/chat/${username}`
     }
 
