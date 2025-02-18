@@ -63,9 +63,7 @@ const Chat = () => {
                 Made by Sirdesai
             </h1> */}
             <ul className='mb-20'>
-               {messages
-  .filter(msg => username === "admin-sirdesai" || msg.username === "admin-sirdesai" || msg.username === username)
-  .map((msg, index) => (
+               {messages.map((msg, index) => (
     <li key={index} className={`text-xl px-2 ${(username === msg.username) ? 'bg-green-100' : 'bg-red-100'}`}>
       <span className="font-semibold">{msg.username}: </span>{msg.text}
     </li>
