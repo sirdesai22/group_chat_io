@@ -70,7 +70,9 @@ const Chat = () => {
                 ))}
             </ul>
 
-            <div className='fixed bg-blue-500 p-3 gap-5 bottom-0 w-full flex justify-between items-center'>
+            {
+                (username === 'admin-sirdesai')?(
+                    <div className='fixed bg-blue-500 p-3 gap-5 bottom-0 w-full flex justify-between items-center'>
                 <input
                     type="text"
                     className='w-full p-3 text-2xl font-semibold rounded-md'
@@ -82,6 +84,10 @@ const Chat = () => {
                     Send
                 </button>
             </div>
+                ):(
+                    <></>
+                )
+            }
         </div>
     );
 };
