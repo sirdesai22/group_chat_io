@@ -22,7 +22,7 @@ const Login = ({ username, setUsername }) => {
     return (
         <div className='h-screen w-full flex justify-center items-center text-center' style={{ background: 'url(/doodlebg.jpg)' }}>
             <div className='flex flex-col justify-center items-center gap-5 p-10 border-2 bg-white text-2xl rounded-md w-11/12 md:w-2/5 md:h-2/4 shadow-md'>
-                <h1 className='font-semibold text-xl md:text-3xl'>🔥Notification Center😎</h1>
+                <h1 className='font-semibold text-xl md:text-3xl'>🔥PESU Notification Center😎</h1>
                 <input
                     type="text"
                     className='border-4 p-4 rounded-lg w-full font-semibold'
