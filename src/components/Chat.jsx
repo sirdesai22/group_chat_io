@@ -57,7 +57,7 @@ const Chat = () => {
         <div className=''>
             {(username === 'admin-sirdesai')?<button className='absolute px-2 m-2 text-white hover:bg-green-600 py-2 text-base font-semibold rounded-md bg-green-500' onClick={deleteDB}>Delete DB</button>:<></>}
             <h1 className='font-semibold text-2xl px-2 py-2 bg-blue-500 text-stone-800 text-center font-mono'>
-                Hello, welcome to 6A group chat!! Have fun ✌️
+                Hello, welcome to PESU notification center ✌️
             </h1>
             {/* <h1 className='font-semibold text-base bg-blue-500 text-white text-center font-mono'>
                 Made by Sirdesai
